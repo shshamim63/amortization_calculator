@@ -1,7 +1,14 @@
 require "highline/import"
 
 require_relative '../lib/payment.rb'
+require_relative '../lib/date_utility'
 
+def output(result)
+  puts "Date                  Start Balance        Principal      Interest      Total pmt   End Balance"
+  result.each do |payment|
+    puts "#{DateConverter.preffered_date_format(payment.start_date)}            #{'%.2f' % payment.start_balance}             #{'%.2f' % payment.principal}         #{'%.2f' % payment.interest}         #{'%.2f' % payment.pmt}         #{'%.2f' % payment.end_balance}"
+  end  
+end
 
 def start(amount, interest, terms, date)
   years = terms.to_f/12
