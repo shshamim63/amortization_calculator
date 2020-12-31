@@ -13,4 +13,8 @@ class Payment
     @principal = (pmt - interest).round(2)
     @end_balance = (start_balance - principal).round(2) > 0 ? (start_balance - principal).round(2) : 0
   end
+
+  def self.interest_monthly(current_start_balance, annual_interest_rate, terms)
+    (current_start_balance*(annual_interest_rate/(terms*100).to_f))
+  end
 end
