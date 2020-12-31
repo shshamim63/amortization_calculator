@@ -17,8 +17,14 @@ class Payment
   def self.change_of_rate(annual_interest_rate, terms, year)
     1-(1/(1+(annual_interest_rate/(terms*100).to_f)) ** ((terms*year)))
   end
-  
+
   def self.interest_monthly(current_start_balance, annual_interest_rate, terms)
     (current_start_balance*(annual_interest_rate/(terms*100).to_f))
+  end
+
+  def self.total_pmt(start_balance, annual_interest_rate, years, terms)
+    monthly_interest = interest_monthly(start_balance, annual_interest_rate, terms)
+    change = change_of_rate(annual_interest_rate,terms, years)
+    (monthly_interest/change).round(2)
   end
 end
