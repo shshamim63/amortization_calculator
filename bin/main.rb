@@ -38,6 +38,7 @@ def get_user_input
   interest = ask "Annual Interest Rate (%): "
   request_date = ask "Disbursment Date(MM/DD/YYYY): "
   generated_table = start(amount.to_f, interest.to_f, terms.to_i, request_date.to_s)
+  output(generated_table)
 end
 
 get_user_input()

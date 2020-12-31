@@ -14,17 +14,22 @@ class Payment
     @end_balance = (start_balance - principal).round(2) > 0 ? (start_balance - principal).round(2) : 0
   end
 
-  def self.change_of_rate(annual_interest_rate, terms, year)
-    1-(1/(1+(annual_interest_rate/(terms*100).to_f)) ** ((terms*year)))
+  def self.total_pmt(start_balance, annual_interest_rate, years, terms)
+    monthly_interest = monthly_rate(annual_interest_rate, terms)
+    modified_interest_amount = (1 + monthly_interest) ** terms
+    change = change_of_rate(modified_interest_amount)
+    (start_balance *(monthly_interest * modified_interest_amount)) / change
   end
 
   def self.interest_monthly(current_start_balance, annual_interest_rate, terms)
     (current_start_balance*(annual_interest_rate/(terms*100).to_f))
   end
 
-  def self.total_pmt(start_balance, annual_interest_rate, years, terms)
-    monthly_interest = interest_monthly(start_balance, annual_interest_rate, terms)
-    change = change_of_rate(annual_interest_rate,terms, years)
-    (monthly_interest/change).round(2)
+  def self.monthly_rate(annual_interest_rate, terms)
+    annual_interest_rate/(terms*100).to_f
+  end
+
+  def self.change_of_rate(monthly_interest_amount)
+    monthly_interest_amount - 1
   end
 end
